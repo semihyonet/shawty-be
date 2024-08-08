@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "shawty-be"
+version = "0.1.0"
+description = "Backend for shawty, an application that shortens urls and let's you reach those tweet limits or not have annoying 200 character links in your messages to your family."
+authors = ["Semih Yonet <semih@shoppingminds.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+fastapi = {extras = ["standard"], version = "^0.112.0"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
