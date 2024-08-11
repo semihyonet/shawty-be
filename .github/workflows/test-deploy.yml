@@ -44,4 +44,5 @@ jobs:
       - name: Test with unittest
         run: |
           poetry install
+          pip list
           python3 -m unittest discover -s app -p '*_tests.py'
