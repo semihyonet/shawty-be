@@ -3,13 +3,14 @@ from unittest.mock import patch
 
 import mongomock
 
-from app.dao.CounterDao import CounterDAO
 
 
 class CoreTests(unittest.TestCase):
 
     @patch('app.core.settings.get_settings')
     def test_counter_retrieval(self, get_settings):
+        from app.dao.CounterDao import CounterDAO
+
         db = mongomock.MongoClient().db
 
         counter_service = CounterDAO(db)
