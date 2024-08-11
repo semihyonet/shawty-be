@@ -2,6 +2,7 @@ from functools import lru_cache
 
 from pydantic_settings import BaseSettings
 
+
 class Settings(BaseSettings):
     IS_DEBUG: bool
 
@@ -15,6 +16,12 @@ class Settings(BaseSettings):
     REDIS_PORT: str
 
     SECRET_KEY: str
+
+    MONGODB_URL: str
+    MONGODB_DB_NAME: str
+
+    HOST: str
+
     class Config:
         env_file = '.env'
 
