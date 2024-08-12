@@ -1,4 +1,5 @@
 from functools import lru_cache
+from pathlib import Path
 
 from pydantic_settings import BaseSettings
 
@@ -23,7 +24,9 @@ class Settings(BaseSettings):
     HOST: str
 
     class Config:
-        env_file = '.env'
+        if Path('.env').exists():
+            env_file = '.env'
+            env_file_encoding = 'utf-8'
 
 
 @lru_cache
