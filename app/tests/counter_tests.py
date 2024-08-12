@@ -2,13 +2,17 @@ import unittest
 from unittest.mock import patch
 
 import mongomock
-
+from dotenv import load_dotenv
 
 
 class CoreTests(unittest.TestCase):
 
-    @patch('app.core.settings.get_settings')
-    def test_counter_retrieval(self, get_settings):
+    def test_counter_retrieval(self):
+        # mock the settings
+        load_dotenv(".env.test", override=True)
+
+        print('test')
+
         from app.dao.CounterDao import CounterDAO
 
         db = mongomock.MongoClient().db
@@ -24,4 +28,3 @@ class CoreTests(unittest.TestCase):
 
         counter = counter_service.get_counter("url_shortener2", default_value)
         self.assertEqual(counter, default_value)
-
