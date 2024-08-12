@@ -24,7 +24,7 @@ class UrlShorteningService(AppService):
 
     async def shorten_url(self, original_url: str, expiration_date: datetime) -> ServiceResult:
         result = None
-        domain = self.settings.HOST
+        domain = self.settings.CLIENT_HOST
         while result is None:
             counter = self.get_current_count()
             short_url_hash = self.__encode(counter)
@@ -32,8 +32,7 @@ class UrlShorteningService(AppService):
             try:
                 result = await self.url_shortening_dao_instance.set_url(original_url, short_url, expiration_date)
             except UrlShorteningExceptions.ShortenedURLAlreadyExist as e:
-                print('error')
-                # self.logger.info(f"Short URL {short_url} already exists. Trying again.")
+                self.logger.info(f"Short URL {short_url} already exists. Trying again.")
                 pass
 
         data = ShortenURLResponseSchema(
@@ -44,8 +43,7 @@ class UrlShorteningService(AppService):
         return ServiceResult(data)
 
     async def retrieve_url(self, shorten_url_hash: str) -> ServiceResult:
-        result = None
-        domain = self.settings.HOST
+        domain = self.settings.CLIENT_HOST
         short_url = f"{domain}/{shorten_url_hash}"
         result = await self.url_shortening_dao_instance.retrieve_with_short_url(short_url)
         if not result:
