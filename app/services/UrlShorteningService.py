@@ -47,7 +47,7 @@ class UrlShorteningService(AppService):
         short_url = f"{domain}/{shorten_url_hash}"
         result = await self.url_shortening_dao_instance.retrieve_with_short_url(short_url)
         if not result:
-            raise UrlShorteningExceptions.ShortenedURLNotFound({"target": short_url})
+            raise UrlShorteningExceptions.ShortenedURLNotFound()
 
         data = ShortenURLResponseSchema(
             original_url=result.original_url,

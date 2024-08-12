@@ -1,5 +1,4 @@
 import unittest
-from unittest.mock import patch
 
 import mongomock
 from dotenv import load_dotenv
