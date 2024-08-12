@@ -1,6 +1,5 @@
 import logging
 
-from pymongo import MongoClient
 from pymongo.database import Database
 
 from app.core.settings import get_settings
