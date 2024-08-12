@@ -11,8 +11,6 @@ class CoreTests(unittest.TestCase):
         # mock the settings
         load_dotenv(".env.test", override=True)
 
-        print('test')
-
         from app.dao.CounterDao import CounterDAO
 
         db = mongomock.MongoClient().db

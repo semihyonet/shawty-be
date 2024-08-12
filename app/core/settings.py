@@ -22,6 +22,7 @@ class Settings(BaseSettings):
     MONGODB_DB_NAME: str
 
     HOST: str
+    CLIENT_HOST: str
 
     class Config:
         if Path('.env').exists():
