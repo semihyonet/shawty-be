@@ -5,6 +5,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.urls import main_router
 from app.core.database.mongodb_initializer import mongodb_initializer
+from app.core.exceptions.AppExceptionCase import AppExceptionCase
+from app.core.utils.app_exception_helper import app_exception_handler
 
 
 @asynccontextmanager
@@ -31,5 +33,5 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
+app.add_exception_handler(AppExceptionCase, app_exception_handler)
 app.include_router(main_router)
