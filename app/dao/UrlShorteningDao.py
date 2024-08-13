@@ -2,6 +2,8 @@ import pytz
 import datetime
 from typing import Optional
 
+from beanie.odm.operators.find.logical import Or
+
 from app.core.services.AppDao import AppDAO
 from app.exceptions.UrlShorteningExceptions import UrlShorteningExceptions
 from app.models import ShortenUrlModel
@@ -17,15 +19,15 @@ class UrlShorteningDAO(AppDAO):
         now = datetime.datetime.now(pytz.utc)
 
         cached_url = await self.cache_service.get(short_url)
-        if cached_url is not None and now < cached_url.expiration_date:
+        if cached_url is not None and (cached_url.expiration_date is None or now < cached_url.expiration_date):
             return cached_url
 
         return await ShortenUrlModel.find(
             ShortenUrlModel.short_url == short_url,
-            ShortenUrlModel.expiration_date > now
+            Or(ShortenUrlModel.expiration_date == None, ShortenUrlModel.expiration_date > now)
         ).first_or_none()
 
-    async def set_url(self, url: str, short_url: str, expiration_date: datetime.datetime) -> ShortenUrlModel:
+    async def set_url(self, url: str, short_url: str, expiration_date: Optional[datetime.datetime]) -> ShortenUrlModel:
         shortened_url = await self.retrieve_with_short_url(short_url)
         if shortened_url is not None:
             raise UrlShorteningExceptions.ShortenedURLAlreadyExist()
