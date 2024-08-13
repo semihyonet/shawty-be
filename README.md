@@ -18,7 +18,6 @@ Shawty is a URL shortening service similar to TinyURL. This repository contains 
 
 - Shorten long URLs into short, easy-to-share links.
 - Redirect shortened URLs to their original destination.
-- Track usage statistics (clicks, creation date, etc.).
 - RESTful API for interacting with the service programmatically.
 - Caching mechanism for improved performance.
 
@@ -26,9 +25,9 @@ Shawty is a URL shortening service similar to TinyURL. This repository contains 
 
 - **Programming Language**: [Python 3](https://www.python.org/)
 - **Framework**: [FastAPI](https://fastapi.tiangolo.com/)
-- **Database**: [PostgreSQL](https://www.postgresql.org/)
+- **Database**: [MongoDB](https://www.postgresql.org/)
 - **Cache**: [Redis](https://redis.io/)
-- **ORM**: [SQLAlchemy](https://www.sqlalchemy.org/) with [Alembic](https://alembic.sqlalchemy.org/) for migrations
+- **ORM**: [Beanie](https://www.sqlalchemy.org/) 
 - **Environment Variables**: [python-dotenv](https://pypi.org/project/python-dotenv/)
 
 ## Project Structure
@@ -53,11 +52,12 @@ Shawty is a URL shortening service similar to TinyURL. This repository contains 
 
 ### Prerequisites
 
-- [Python 3.9+](https://www.python.org/) installed on your machine.
-- A running instance of PostgreSQL.
+- [Python 3.11+](https://www.python.org/) installed on your machine.
+- A running instance of MongoDB.
 - A running instance of Redis.
 
 ### Installation
+
 
 1. **Clone the repository:**
 
@@ -66,7 +66,23 @@ Shawty is a URL shortening service similar to TinyURL. This repository contains 
    cd shawty-backend
    ```
 
-2. **Create and activate a virtual environment:**
+
+2. **Set up environment variables:**
+
+   - Copy `.env.example` to `.env` and update the variables accordingly:
+
+   ```bash
+   cp .env.example .env
+   ```
+   - Add mongodb connection strings.
+3. **Install it with Docker!**
+
+   ```bash
+   docker-compose up --build
+   ```
+
+
+3b. **Or install it regularly, Create and activate a virtual environment:**
 
    ```bash
    python3 -m venv .venv
@@ -80,24 +96,11 @@ Shawty is a URL shortening service similar to TinyURL. This repository contains 
     poetry install
    ```
 
-4. **Set up environment variables:**
-
-   - Copy `.env.example` to `.env` and update the variables accordingly:
-
-   ```bash
-   cp .env.example .env
-   ```
-
-5. **Run database migrations:**
-
-   ```bash
-   alembic upgrade head
-   ```
-
+   
 6. **Start the server:**
 
    ```bash
-   uvicorn app.main:app --reload
+   uvicorn app.main:app --reload --port 8000
    ```
 
    The server will be running at `http://127.0.0.1:8000`.
@@ -106,9 +109,8 @@ Shawty is a URL shortening service similar to TinyURL. This repository contains 
 
 The application requires the following environment variables:
 
-- The connection string for the PostgreSQL database.
+- The connection string for the MongoDB database.
 - The connection string for the Redis instance.
-- A secret key for securely signing the data.
 
 Refer to `.env.example` for a full list of required variables.
 
@@ -122,22 +124,11 @@ Detailed API documentation is available via Swagger at `http://127.0.0.1:8000/do
 ## Testing
 
 To run the tests:
-
-1. **Install test dependencies:**
-
-   ```bash
-   pip install -r requirements-test.txt
-   ```
-
-2. **Run tests:**
+1. **Run tests:**
 
    ```bash
    python3 -m unittest discover -s app -p '*_tests.py'
    ```
-
-## Contributing
-
-Contributions are welcome! Please open an issue or submit a pull request.
 
 ## License
 
