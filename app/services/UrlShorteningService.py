@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Optional
 
 from app.core.services.AppService import AppService
 from app.core.services.ServiceResult import ServiceResult
@@ -22,7 +23,7 @@ class UrlShorteningService(AppService):
     def __encode(self, num: int) -> str:
         return convert_base10_to_base58(num)
 
-    async def shorten_url(self, original_url: str, expiration_date: datetime) -> ServiceResult:
+    async def shorten_url(self, original_url: str, expiration_date: Optional[datetime]) -> ServiceResult:
         result = None
         domain = self.settings.CLIENT_HOST
         while result is None:
